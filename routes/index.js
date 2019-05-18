@@ -234,7 +234,7 @@ router.get('/coininfo', function(req, res) {
 
             var mnRewardsPerYear = mnRewardsPerDay * 365;
             var mnRoi = ((mnRewardsPerYear / settings.coininfo.masternode_required) * 100).toFixed(2);
-            var coinsLocked = totalMnCount * settings.coininfo.masternode_required;
+            var coinsLocked = totalMnCount.total * settings.coininfo.masternode_required;
             var coinsLockedPerc = coinsLocked / (stats.supply/100);
             var nodeWorthBtc = (settings.coininfo.masternode_required * priceBtc).toFixed(8);
             var nodeWorthUsd = (cmc.price_usd) ? (settings.coininfo.masternode_required * cmc.price_usd).toFixed(2) : null;
@@ -262,7 +262,7 @@ router.get('/coininfo', function(req, res) {
               cmc: cmc,
               blockCount24h: -1,
               avgBlockTime: -1,
-              totalMasternodes: totalMnCount,
+              totalMasternodes: totalMnCount.total,
               activeMasternodes: activeMnCount,
               mnRoi: mnRoi,
               supply: formatNum(stats.supply, { maxFraction: 4 }),
@@ -421,7 +421,7 @@ router.get('/ext/summary', function(req, res) {
                   res.send({ data: [{
                     difficulty: difficulty,
                     difficultyHybrid: difficultyHybrid,
-                    masternodeCount: masternodecount,
+                    masternodeCount: masternodecount.total,
                     masternodeOnlineCount: masternodeonlinecount,
                     supply: formatNum(stats.supply, { maxFraction: 4 }),
                     hashrate: hashrate,
